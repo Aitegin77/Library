@@ -1,0 +1,64 @@
+﻿@page
+@model API.Pages.Account.RegistrationModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-900">
+    <div class="w-full max-w-md p-8 space-y-6 bg-gray-800 shadow-lg rounded-xl">
+        <h2 class="text-3xl font-bold text-center text-white">Регистрация</h2>
+
+        <form method="post" enctype="multipart/form-data" class="space-y-4">
+
+            <!-- Логин -->
+            <div>
+                <label class="block text-sm font-medium text-gray-300">Логин</label>
+                <input type="text" name="Login" class="w-full p-3 mt-1 bg-gray-700 border-none rounded-lg text-white focus:ring-2 focus:ring-blue-500" placeholder="Введите логин" required>
+            </div>
+
+            <!-- Ник -->
+            <div>
+                <label class="block text-sm font-medium text-gray-300">Ник</label>
+                <input type="text" name="Nickname" class="w-full p-3 mt-1 bg-gray-700 border-none rounded-lg text-white focus:ring-2 focus:ring-blue-500" placeholder="Введите ник" required>
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="block text-sm font-medium text-gray-300">Email</label>
+                <input type="email" name="Email" class="w-full p-3 mt-1 bg-gray-700 border-none rounded-lg text-white focus:ring-2 focus:ring-blue-500" placeholder="Введите email" required>
+            </div>
+
+            <!-- Пароль -->
+            <div>
+                <label class="block text-sm font-medium text-gray-300">Пароль</label>
+                <input type="password" name="Password" class="w-full p-3 mt-1 bg-gray-700 border-none rounded-lg text-white focus:ring-2 focus:ring-blue-500" placeholder="Введите пароль" required>
+            </div>
+
+            <!-- Подтверждение пароля -->
+            <div>
+                <label class="block text-sm font-medium text-gray-300">Подтвердите пароль</label>
+                <input type="password" name="ConfirmPassword" class="w-full p-3 mt-1 bg-gray-700 border-none rounded-lg text-white focus:ring-2 focus:ring-blue-500" placeholder="Повторите пароль" required>
+            </div>
+
+            <!-- Загрузка фото профиля -->
+            <div>
+                <label class="block text-sm font-medium text-gray-300">Фото профиля</label>
+                <input type="file" name="ProfilePhoto" class="w-full p-3 mt-1 bg-gray-700 border-none rounded-lg text-white focus:ring-2 focus:ring-blue-500" accept="image/*">
+            </div>
+
+            <!-- Кнопка отправки формы -->
+            <button type="submit" class="w-full px-4 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-all">Зарегистрироваться</button>
+        </form>
+
+        <p class="text-sm text-center text-gray-400">Уже есть аккаунт? <a href="/Login" class="text-blue-400 hover:underline">Войти</a></p>
+    </div>
+</body>
+</html>

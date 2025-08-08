@@ -1,0 +1,226 @@
+﻿@page
+@model API.Pages.Book.UploadModel
+@using Common.Redirects;
+
+@{
+    ViewData["Title"] = "Загрузка книги";
+}
+
+<h2 class="text-4xl font-bold mb-10 text-center text-white">Загрузка книги</h2>
+<form method="post" enctype="multipart/form-data" asp-page-handler="Upload"
+      class="max-w-3xl mx-auto space-y-6 bg-white p-6 rounded-xl shadow-md">
+    
+    <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+
+    <!-- Название книги -->
+    <div>
+        <label asp-for="Book.Title" class="block text-sm font-medium text-gray-700 mb-1"></label>
+        <input asp-for="Book.Title" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 outline-none" />
+        <span asp-validation-for="Book.Title" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Альтернативные названия -->
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Альтернативные названия</label>
+
+        <div id="alt-title-tags"
+             class="flex flex-wrap gap-2 border border-gray-300 rounded-lg p-2 min-h-[2.5rem] bg-white shadow-sm hidden">
+        </div>
+
+        <div class="flex gap-2 items-center mt-2">
+            <input type="text" id="new-alt-title"
+                   class="w-full border border-gray-300 rounded-lg p-2 min-h-[2.5rem] bg-white shadow-sm hover:border-blue-400 focus:border-blue-500 transition" />
+
+            <button type="button" onclick="addAltTitle('new-alt-title', 'alt-title-tags', 'Book_AlternativeTitles')"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition shadow whitespace-nowrap">
+                Добавить
+            </button>
+        </div>
+
+        <input asp-for="Book.AlternativeTitles" type="hidden" />
+        <span asp-validation-for="Book.AlternativeTitles" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Дата публикации -->
+    <div>
+        <label asp-for="Book.PublishedDate" class="block text-sm font-medium text-gray-700 mb-1"></label>
+        <input asp-for="Book.PublishedDate" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 outline-none" type="date" />
+        <span asp-validation-for="Book.PublishedDate" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- ISBN -->
+    <div>
+        <label asp-for="Book.ISBN" class="block text-sm font-medium text-gray-700 mb-1"></label>
+        <input asp-for="Book.ISBN" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 outline-none" />
+        <span asp-validation-for="Book.ISBN" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Авторы -->
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Авторы</label>
+
+        <div id="author-tags"
+             class="flex flex-wrap gap-2 border border-gray-300 rounded-lg p-2 min-h-[2.5rem] bg-white shadow-sm hidden">
+        </div>
+
+        <div class="flex gap-2 items-center mt-2">
+            <div class="relative flex-grow">
+                <input type="text" id="author-search-engine" autocomplete="off"
+                       class="w-full border border-gray-300 rounded-lg p-2 min-h-[2.5rem] bg-white shadow-sm hover:border-blue-400 focus:border-blue-500 transition" />
+
+                <div id="author-list"
+                     class="absolute z-20 bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto mt-1 w-full hidden">
+                </div>
+            </div>
+
+            <a href="@LibRedirect.ToCreateAuthorPageUrl"
+               class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition shadow whitespace-nowrap">
+                Создать
+            </a>
+        </div>
+
+        <input asp-for="Book.AuthorsId" type="hidden" />
+        <span asp-validation-for="Book.AuthorsId" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Издательство -->
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Издательство</label>
+
+        <div class="flex gap-2 items-start mt-2">
+            <div class="relative flex-grow">
+                <input type="text" id="publisher-search-engine" autocomplete="off"
+                       class="w-full border border-gray-300 rounded-lg p-2 min-h-[2.5rem] bg-white shadow-sm hover:border-blue-400 focus:border-blue-500 transition" />
+
+                <div id="publisher-list"
+                     class="absolute z-20 bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto mt-1 w-full hidden">
+                </div>
+            </div>
+
+            <a href="@LibRedirect.ToCreatePublisherPageUrl"
+               class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition shadow whitespace-nowrap">
+                Создать
+            </a>
+        </div>
+
+        <input asp-for="Book.PublisherId" type="hidden" />
+        <span asp-validation-for="Book.PublisherId" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Жанры -->
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Жанры</label>
+
+        <div id="genre-tags"
+             class="flex flex-wrap gap-2 border border-gray-300 rounded-lg p-2 min-h-[2.5rem] bg-white shadow-sm hidden">
+        </div>
+
+        <div class="flex gap-2 items-start mt-2">
+            <div class="relative flex-grow">
+                <input type="text" id="genre-search-engine" autocomplete="off"
+                       class="w-full border border-gray-300 rounded-lg p-2 min-h-[2.5rem] bg-white shadow-sm hover:border-blue-400 focus:border-blue-500 transition" />
+
+                <div id="genre-list"
+                     class="absolute z-20 bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto mt-1 w-full hidden">
+                </div>
+            </div>
+
+            <a href="@LibRedirect.ToCreateGenrePageUrl"
+               class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition shadow whitespace-nowrap">
+                Создать
+            </a>
+        </div>
+
+        <input asp-for="Book.GenresId" type="hidden" />
+        <span asp-validation-for="Book.GenresId" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Тип -->
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Тип</label>
+
+        <div class="flex gap-2 items-start mt-2">
+            <div class="relative flex-grow">
+                <input type="text" id="book-type-search-engine" autocomplete="off"
+                       class="w-full border border-gray-300 rounded-lg p-2 min-h-[2.5rem] bg-white shadow-sm hover:border-blue-400 focus:border-blue-500 transition" />
+
+                <div id="book-type-list"
+                     class="absolute z-20 bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto mt-1 w-full hidden">
+                </div>
+            </div>
+
+            <a href="@LibRedirect.ToCreateBookTypePageUrl"
+               class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition shadow whitespace-nowrap">
+                Создать
+            </a>
+        </div>
+
+        <input asp-for="Book.BookTypeId" type="hidden" />
+        <span asp-validation-for="Book.BookTypeId" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Обложка книги -->
+    <div class="mb-4">
+        <label asp-for="Book.CoverImage" class="block text-sm font-medium text-gray-700 mb-1"></label>
+        <input asp-for="Book.CoverImage" accept="image/*"
+               class="block w-full text-sm text-gray-700 border border-gray-300 rounded-r-lg cursor-pointer
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+        <span asp-validation-for="Book.CoverImage" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Описание -->
+    <div>
+        <label asp-for="Book.Description" class="block text-sm font-medium text-gray-700 mb-1"></label>
+        <textarea asp-for="Book.Description"
+                  class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 outline-none h-32 resize-y"></textarea>
+        <span asp-validation-for="Book.Description" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Страницы книги -->
+    <div class="mb-4">
+        <label asp-for="Book.Pages" class="block text-sm font-medium text-gray-700 mb-1"></label>
+        <input asp-for="Book.Pages" type="file" accept=".pdf"
+               class="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+        <span asp-validation-for="Book.Pages" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Кнопка отправки -->
+    <div class="flex justify-center">
+        <button type="submit"
+                class="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition">
+            Загрузить
+        </button>
+    </div>
+</form>
+
+<!-- Модальное окно альтерантивных названий -->
+@* <div id="alt-title-modal"
+     class="fixed inset-0 bg-black bg-opacity-40 hidden z-50 flex items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-4">
+        <h3 class="text-xl font-semibold text-gray-800 text-center">Добавить альтернативное название</h3>
+        <input type="text" id="new-alt-title"
+               class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none"
+               placeholder="Название" />
+        <div class="flex justify-end gap-2">
+            <button onclick="closeModal('alt-title-modal')"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-xl">
+                Отмена
+            </button>
+            <button onclick="saveNewAltTitle('new-alt-title', 'alt-title-modal')"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl">
+                Сохранить
+            </button>
+        </div>
+    </div>
+</div> *@
+
+@section Scripts {
+    <script src="~/js/alt-title-service.js"></script>
+    <script src="~/js/author-search-engine.js"></script>
+    <script src="~/js/book-type-search-engine.js"></script>
+    <script src="~/js/genre-search-engine.js"></script>
+    <script src="~/js/publisher-search-engine.js"></script>
+
+    <partial name="_ValidationScriptsPartial" />
+}

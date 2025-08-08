@@ -1,0 +1,26 @@
+﻿@page
+@model API.Pages.IndexModel
+@{
+    ViewData["Title"] = "Sparkle Library";
+}
+
+<section class="text-center">
+    <h2 class="text-4xl font-bold text-white mb-6">Welcome to Sparkle Library</h2>
+    <p class="text-lg text-white mb-8">
+        Discover a world of knowledge, stories, and inspiration.
+    </p>
+    <a href="@LibRedirect.ToCatalogPageUrl" class="bg-indigo-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-indigo-500 transition duration-200">
+        Browse Books
+    </a>
+</section>
+<section class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <img src="/images/books.jpg" alt="Books" class="w-full h-48 object-cover">
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Vast Collection</h3>
+            <p class="text-gray-600">
+                Access thousands of books from various genres and authors, all in one place.
+            </p>
+        </div>
+    </div>
+</section>

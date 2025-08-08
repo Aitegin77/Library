@@ -1,0 +1,65 @@
+﻿@page
+@model API.Pages.Publishers.CreateModel
+@{
+    ViewData["Title"] = "Создание нового издательства";
+}
+
+<h2 class="text-4xl font-bold mb-10 text-center text-white">Создание нового издательства</h2>
+<form method="post" enctype="multipart/form-data" asp-page-handler="Create"
+      class="max-w-3xl mx-auto space-y-6 bg-white p-6 rounded-xl shadow-md">
+
+    <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+
+    <!-- Название -->
+    <div>
+        <label asp-for="Publisher.Name" class="block text-sm font-medium text-gray-700 mb-1"></label>
+        <input asp-for="Publisher.Name" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 outline-none" />
+        <span asp-validation-for="Publisher.Name" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Адрес -->
+    <div>
+        <label asp-for="Publisher.Address" class="block text-sm font-medium text-gray-700 mb-1"></label>
+        <input asp-for="Publisher.Address" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 outline-none" />
+        <span asp-validation-for="Publisher.Address" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Контакты -->
+    <div>
+        <label asp-for="Publisher.Contacts" class="block text-sm font-medium text-gray-700 mb-1"></label>
+        <input asp-for="Publisher.Contacts" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 outline-none" />
+        <span asp-validation-for="Publisher.Contacts" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Страна -->
+    <div>
+        <label for="country-search" class="block text-sm font-medium text-gray-700 mb-1">Страна</label>
+        <input type="text" id="country-search" class="w-full border rounded p-2 mb-1" autocomplete="off" />
+        <div id="country-list" class="border border-gray-300 rounded max-h-40 overflow-y-auto hidden"></div>
+        <input type="hidden" asp-for="Publisher.CountryId" />
+        <span asp-validation-for="Publisher.CountryId" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Доп. информация -->
+    <div>
+        <label asp-for="Publisher.ExtraInfo" class="block text-sm font-medium text-gray-700 mb-1"></label>
+        <textarea asp-for="Publisher.ExtraInfo"
+                  class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 outline-none h-32 resize-y"></textarea>
+        <span asp-validation-for="Publisher.ExtraInfo" class="text-red-600 text-sm"></span>
+    </div>
+
+    <!-- Кнопка отправки -->
+    <div class="flex justify-center">
+        <button type="submit" asp-page-handler="Create"
+                class="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition">
+            Создать
+        </button>
+    </div>
+</form>
+
+<script src="~/js/uploadBook.js"></script>
+<script src="~/js/countrySearchPublisher.js"></script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

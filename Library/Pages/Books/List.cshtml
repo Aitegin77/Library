@@ -1,0 +1,46 @@
+﻿@page
+@model API.Pages.Book.ListModel
+@{
+}
+
+<section class="min-h-screen bg-gray-100 py-10 px-4">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Каталог книг</h1>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            @foreach (var book in Model.Books)
+            {
+                <div class="bg-white rounded-2xl shadow hover:shadow-lg transition duration-300 flex flex-col">
+                    <a asp-page="/Books/Details" asp-route-id="@book.Id">
+                        <img src="@book.CoverImageUrl" alt="@book.Name" class="w-full h-60 object-cover rounded-t-2xl">
+                    </a>
+                    <div class="p-4 flex-1 flex flex-col">
+                        <h2 class="text-lg font-semibold text-gray-800 mb-1 line-clamp-2">@book.Name</h2>
+
+                        <p class="text-sm text-gray-600 mb-1">
+                            Авторы: @string.Join(", ", book.Authors.Select(a => a.Name))
+                        </p>
+
+                        <p class="text-sm text-gray-500 mb-1">
+                            Жанры: @string.Join(", ", book.Genres.Select(g => g.Name))
+                        </p>
+
+                        <p class="text-sm text-yellow-600 font-medium mb-4">
+                            Рейтинг: @book.Rating.ToString("0.0") ⭐
+                        </p>
+
+                        <div class="mt-auto">
+                            <a asp-page="/Books/Details" asp-route-id="@book.Id" class="inline-block bg-blue-600 text-white text-sm px-4 py-2 rounded-xl hover:bg-blue-700 transition">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="mt-10 text-center">
+            <a asp-page="/Books/All" class="text-blue-600 hover:underline">Показать все книги</a>
+        </div>
+    </div>
+</section>

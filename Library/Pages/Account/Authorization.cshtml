@@ -1,0 +1,39 @@
+﻿@page
+@model API.Pages.Account.AuthorizationModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen"
+      style="background-image: url('/images/background.webp'); background-attachment: fixed;
+             background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="w-full max-w-md p-8 space-y-6 bg-gray-800 shadow-lg rounded-xl">
+        <h2 class="text-3xl font-bold text-center text-white">Вход в систему</h2>
+        
+        <form method="post" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-300">Логин</label>
+                <input type="text" name="Login" class="w-full p-3 mt-1 bg-gray-700 border-none rounded-lg text-white focus:ring-2 focus:ring-blue-500" placeholder="Введите логин">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-300">Пароль</label>
+                <input type="password" name="Password" class="w-full p-3 mt-1 bg-gray-700 border-none rounded-lg text-white focus:ring-2 focus:ring-blue-500" placeholder="Введите пароль">
+            </div>
+            
+            <button type="submit" asp-page-handler="SignIn" class="w-full px-4 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-all">Войти</button>
+        </form>
+        
+        <p class="text-sm text-center text-gray-400">Нет аккаунта? <a href="/Registration" class="text-blue-400 hover:underline">Зарегистрироваться</a></p>
+    </div>
+</body>
+</html>

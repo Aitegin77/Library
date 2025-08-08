@@ -1,0 +1,70 @@
+﻿@using Common.Redirects
+@inject BLL.Interfaces.IProfileService ProfileService
+
+@{
+    var profileIcon = await ProfileService.GetProfileIconAsync();
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col min-h-screen font-sans leading-normal tracking-normal"
+      style="background-image: url('/images/background.webp'); background-attachment: fixed;
+             background-size: cover; background-position: center; background-repeat: no-repeat;">
+
+    <header class="fixed top-0 left-0 right-0 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 text-white shadow-md z-50">
+        <div class="container mx-auto px-2 h-[68px] flex items-center justify-between">
+            <a href="/" class="text-3xl font-bold flex items-center h-full no-underline hover:no-underline">
+                Sparkle Library
+            </a>
+
+            <div class="flex items-center space-x-6">
+                <nav class="flex space-x-6">
+                    <a href="@LibRedirect.ToUploadBookPageUrl" class="hover:text-yellow-300 transition-colors duration-200">Загрузка книги</a>
+                    <a href="/about" class="hover:text-yellow-300 transition-colors duration-200">О нас</a>
+                    <a href="/contact" class="hover:text-yellow-300 transition-colors duration-200">Контакты</a>
+                </nav>
+
+                @if (profileIcon != null)
+                {
+                    <div class="relative">
+                        <img src="@profileIcon" alt="Icon"
+                             class="rounded-full w-10 h-10 cursor-pointer my-0" id="profile-icon">
+                        <div id="profile-menu" class="hidden absolute right-0 mt-2 w-40 bg-white shadow-md rounded-lg">
+                            <form method="post" asp-page="@LibRedirect.ToSignInPageUrl" asp-page-handler="SignOut">
+                                <button type="submit"
+                                        class="w-full text-left p-2 text-gray-800 hover:bg-pink-100 rounded-lg focus:outline-none transition-colors duration-200">
+                                    Выйти
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <a href="@LibRedirect.ToSignInPageUrl" class="text-white hover:text-yellow-300 transition-colors duration-200">Войти</a>
+                }
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-24 container mx-auto px-6">
+        @RenderBody()
+    </main>
+
+    <footer class="bg-gradient-to-r from-purple-900 via-red-800 to-pink-900 text-white py-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p class="text-sm">&copy; 2025 Sparkle Library. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="~/js/_layout.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
